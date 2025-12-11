@@ -1,0 +1,23 @@
+#!/bin/bash
+
+URL="https://pokeapi.co/api/v2/pokemon/pikachu"
+
+
+response=$(curl -sS "$URL" -w "%{http_code}" -o data.json)
+status=$?
+
+
+if [ $status -ne 0 ]; then
+    echo "curl failed with exit code $status" >> errors.txt
+    exit 1
+fi
+
+
+http_code=${response}
+
+if [ "$http_code" -ne 200 ]; then
+    echo "HTTP error: $http_code" >> errors.txt
+    exit 1
+fi
+
+exit 0
