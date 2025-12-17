@@ -6,4 +6,8 @@ HEIGHT=$(jq '.height' data.json)
 WEIGHT=$(jq '.weight' data.json)
 TYPE=$(jq -r '.types[0].type.name' data.json)
 
+#Converting  height (decimetres to metres) and weight (hectograms to kg)
+HEIGHT_M=(echo "$HEIGHT" | awk '{printf "%.1f", $1/10}')
+WEIGHT_KG=(echo "$WEIGHT"| awk '{printf "%d", $1/10}')
 
+#capit
