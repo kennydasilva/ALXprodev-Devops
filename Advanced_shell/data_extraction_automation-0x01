@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-# Extraction of the fields using jq
-NAME=$(jq -r '.name' data.json)
-HEIGHT=$(jq '.height' data.json)
-WEIGHT=$(jq '.weight' data.json)
-TYPE=$(jq -r '.types[0].type.name' data.json)
+# Extracting fields using jq
+name=$(jq -r '.name' data.json)
+height=$(jq '.height' data.json)
+weight=$(jq '.weight' data.json)
+type=$(jq -r '.types[0].type.name' data.json)
 
-# Convertion of the height (decimetres → metres) and weight (hectograms → kg)
-HEIGHT_M=$(echo "$HEIGHT" | awk '{printf "%.1f", $1/10}')
-WEIGHT_KG=$(echo "$WEIGHT" | awk '{printf "%d", $1/10}')
+# Converting  units using awk
+formatted_height=$(echo "$height" | awk '{printf "%.1f", $1/10}')
+formatted_weight=$(echo "$weight" | awk '{printf "%d", $1/10}')
 
-# Capitalizing of the  name and type
-NAME_FMT=$(echo "$NAME" | sed 's/.*/\u&/')
-TYPE_FMT=$(echo "$TYPE" | sed 's/.*/\u&/')
+# Capitalizing the  name and type using sed
+name=$(echo "$name" | sed 's/.*/\u&/')
+type=$(echo "$type" | sed 's/.*/\u&/')
 
 
-echo "$NAME_FMT is of type $TYPE_FMT, weighs ${WEIGHT_KG}kg, and is ${HEIGHT_M}m tall."
+echo "$name is of type $type, weighs ${formatted_weight}kg, and is ${formatted_height}m tall."
