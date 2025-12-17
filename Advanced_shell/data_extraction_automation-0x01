@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#Extraction of fields using jq
+Name=$(jq -r '.name' data.json)
+HEIGHT=$(jq '.height' data.json)
+WEIGHT=$(jq '.weight' data.json)
+TYPE=$(jq -r '.types[0].type.name' data.json)
+
+
