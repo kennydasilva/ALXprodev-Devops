@@ -1,24 +1,22 @@
 #!/usr/bin/env bash
 
-#List of Pokemon
+# Create directory to store pokemon data
+mkdir -p pokemon_data
+
+# List of Pokémon
 pokemon_list=("bulbasaur" "ivysaur" "venusaur" "charmander" "charmeleon")
 
-#loop through each pokemon
+# Loop through each Pokémon
 for pokemon in "${pokemon_list[@]}"; do
     echo "Fetching data for $pokemon..."
 
     curl -s "https://pokeapi.co/api/v2/pokemon/$pokemon" \
-     -o "pokemon_data/$pokemon.json"
+        -o "pokemon_data/$pokemon.json"
 
-
-    if[ -f "pokemon_data/$pokemon.json"]; then
-        echo "saved data to pokemon_data/$pokemon.json ✅"
-
+    if [ -f "pokemon_data/$pokemon.json" ]; then
+        echo "Saved data to pokemon_data/$pokemon.json ✅"
     fi
 
-
-    sleep1
-
-
-
+   
+    sleep 1
 done
