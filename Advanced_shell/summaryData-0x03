@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+#the csv file
+csv_file="pokemon_report.csv"
+
+#csv header
+echo "Name,Height (m), Weight (kg)"> "$csv_file"
+
+
+#Loop through all json file
