@@ -1,18 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-#Extraction of fields using jq
-Name=$(jq -r '.name' data.json)
+# Extraction of the fields using jq
+NAME=$(jq -r '.name' data.json)
 HEIGHT=$(jq '.height' data.json)
 WEIGHT=$(jq '.weight' data.json)
 TYPE=$(jq -r '.types[0].type.name' data.json)
 
-#Converting  height (decimetres to metres) and weight (hectograms to kg)
-HEIGHT_M=(echo "$HEIGHT" | awk '{printf "%.1f", $1/10}')
-WEIGHT_KG=(echo "$WEIGHT"| awk '{printf "%d", $1/10}')
+# Convertion of the height (decimetres → metres) and weight (hectograms → kg)
+HEIGHT_M=$(echo "$HEIGHT" | awk '{printf "%.1f", $1/10}')
+WEIGHT_KG=$(echo "$WEIGHT" | awk '{printf "%d", $1/10}')
 
-#capitalizing  name and typpe
+# Capitalizing of the  name and type
 NAME_FMT=$(echo "$NAME" | sed 's/.*/\u&/')
-TYPE_FMT=$(echo "$Type" | sed 's/.*/\u&/')
+TYPE_FMT=$(echo "$TYPE" | sed 's/.*/\u&/')
 
 
-
+echo "$NAME_FMT is of type $TYPE_FMT, weighs ${WEIGHT_KG}kg, and is ${HEIGHT_M}m tall."
