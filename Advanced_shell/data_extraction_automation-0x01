@@ -10,4 +10,9 @@ TYPE=$(jq -r '.types[0].type.name' data.json)
 HEIGHT_M=(echo "$HEIGHT" | awk '{printf "%.1f", $1/10}')
 WEIGHT_KG=(echo "$WEIGHT"| awk '{printf "%d", $1/10}')
 
-#capit
+#capitalizing  name and typpe
+NAME_FMT=$(echo "$NAME" | sed 's/.*/\u&/')
+TYPE_FMT=$(echo "$Type" | sed 's/.*/\u&/')
+
+
+
