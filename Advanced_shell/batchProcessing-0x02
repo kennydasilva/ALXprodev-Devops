@@ -6,17 +6,37 @@ mkdir -p pokemon_data
 # List of Pokémon
 pokemon_list=("bulbasaur" "ivysaur" "venusaur" "charmander" "charmeleon")
 
+max_retries=3
+
 # Loop through each Pokémon
 for pokemon in "${pokemon_list[@]}"; do
     echo "Fetching data for $pokemon..."
 
-    curl -s "https://pokeapi.co/api/v2/pokemon/$pokemon" \
-        -o "pokemon_data/$pokemon.json"
+    attempt=1
+    sucess=false
 
-    if [ -f "pokemon_data/$pokemon.json" ]; then
-        echo "Saved data to pokemon_data/$pokemon.json ✅"
+
+    while [$attempt -le $max_retries]; do
+        curl -s -f"https://pokeapi.co/api/v2/pokemon/$pokemon" \
+            -o "pokemon_data/$pokemon.json"
+
+
+        if [ $? -eq 0]; then
+            echo "Saved data to pokemon_data/$pokemon.json ✅"
+            sucess=true
+            break
+        else
+            echo "Attempt $attempt failed for $pokemon, Retrying..."
+            attempt=$((attempt + 1))
+            sleep 1
+        fi
+    done
+
+    if [ "$success" = false ]; then
+        echo "Error: Failed to fetch data for $pokemon after $max_retries attempts."
     fi
 
-   
     sleep 1
 done
+
+
