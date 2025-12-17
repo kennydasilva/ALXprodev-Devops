@@ -26,7 +26,13 @@ for pokemon in "${pokemon_list[@]}"; do
     fetch_pokemon "$pokemon" &
 done
 
+# List background jobs (process management)
+jobs
+
 # Wait for all background processes to finish
 wait
+
+# Safety cleanup (process management example)
+kill $(jobs -p) 2>/dev/null
 
 echo "All Pokémon data fetched."
