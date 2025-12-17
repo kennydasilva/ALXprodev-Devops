@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+#@kenny-dasilva
+#Funcionalite:report that summarizes data for multiple Pokémon.
+
+
 #the csv file
 csv_file="pokemon_report.csv"
 
@@ -8,3 +12,32 @@ echo "Name,Height (m), Weight (kg)"> "$csv_file"
 
 
 #Loop through all json file
+for file in pokemon_data/*.json; do
+    
+    name=$(jq -r '.name' "$file")
+    height=$(jq '.height' "$file")
+    weight=$(jq '.weight' "$file")
+
+    height_m=$(echo "$height" | awk '{printf "%.1f", $1/10}')
+    weight_kg=$(echo "$weight" | awk '{printf "%.1f", $1/10}')
+
+    name=$(echo "$name" | sed 's/.*/\u&/')
+
+    echo "$name,$height_m,$weight_kg" >> "$csv_file"
+done
+
+
+echo "CSV Report generated at: $csv_file"
+echo
+
+awk -F',' '
+NR>1 { 
+    total_height +=$2
+    total_weight +=$3
+    count++
+}
+END{
+    printf "Average Height: %.2f m\n", total_height/count
+    print "Average Weight: %.2f kg\n", total_weight/count
+}
+' "$csv_file"
