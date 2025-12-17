@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+#List of Pokemon
+pokemon_list=("bulbasaur" "ivysaur" "venusaur" "charmander" "charmeleon")
+
+#loop through each pokemon
+for pokemon in "${pokemon_list[@]}"; do
+    echo "Fetching data for $pokemon..."
+
+    curl -s "https://pokeapi.co/api/v2/pokemon/$pokemon" \
+     -o "pokemon_data/$pokemon.json"
+
+
+    if[ -f "pokemon_data/$pokemon.json"]; then
+        echo "saved data to pokemon_data/$pokemon.json ✅"
+
+    fi
+
+
+    sleep1
+
+
+
+done
